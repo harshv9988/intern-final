@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import email from "../../assets/images/emailVerification/email2.png";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
+import { useAlert } from "react-alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +51,7 @@ export default function EmailVerification(props) {
   const classes = useStyles();
   const [verified, setVerified] = useState(false);
   const [loader, setLoader] = useState(false);
+  const alert = useAlert();
 
   const clickHandler = () => {
     setLoader(true);
@@ -60,7 +62,10 @@ export default function EmailVerification(props) {
       .then((res) => {
         console.log(res);
         setLoader(false);
-        if (res.data.success) setVerified(true);
+        if (res.data.success) {
+          setVerified(true);
+          alert.success("Verified SuccessFully");
+        }
       })
       .catch((err) => console.log(err));
   };

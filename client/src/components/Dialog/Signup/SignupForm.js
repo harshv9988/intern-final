@@ -11,6 +11,7 @@ import "./Signup.css";
 import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 import { authContext } from "../../../context/Auth";
+import { useAlert } from "react-alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignupForm({ setShowLoginForm, onClose }) {
   const classes = useStyles();
-
+  const alert = useAlert();
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -129,7 +130,7 @@ export default function SignupForm({ setShowLoginForm, onClose }) {
   const [passwordET, setPasswordET] = useState("");
   const [confpassET, setConfPassET] = useState("");
 
-  let { setSnack } = useContext(authContext);
+  // let { setSnack } = useContext(authContext);
 
   const validateEmail = (email) => {
     const emailRegex = /\S+@\S+\.\S+/;
@@ -187,10 +188,10 @@ export default function SignupForm({ setShowLoginForm, onClose }) {
       data: data,
     })
       .then(function (res) {
-        onClose();
-        setSnack(
-          "Mail has been sent to the email provided. Please check your inbox to verify your email before continuing to the website"
+        alert.success(
+          "Mail has been sent to the email provided. Please check your inbox to verify your email Address"
         );
+        onClose();
       })
       .catch(function (error) {
         console.log(error.response.data.message);

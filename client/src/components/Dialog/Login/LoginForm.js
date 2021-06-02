@@ -13,6 +13,7 @@ import axios from "axios";
 import LoginWithGoogle from "./GoogleLogin";
 import { useHistory } from "react-router";
 import { authContext } from "../../../context/Auth";
+import { useAlert } from "react-alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,6 +120,7 @@ export default function LoginForm({ setShowLoginForm, onClose }) {
   const [emailErrorText, setEmailErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
   let { auth, setAuth, setSnack } = useContext(authContext);
+  const alert = useAlert();
 
   const validateEmail = (email) => {
     const emailRegex = /\S+@\S+\.\S+/;
@@ -170,7 +172,7 @@ export default function LoginForm({ setShowLoginForm, onClose }) {
       .catch(function (error) {
         setLoading(false);
         if (error.response.data.verified === false)
-          setSnack(error.response.data.message);
+          alert.error(error.response.data.message);
         else setEmailErrorText("Incorrect Email/Password");
       });
   };
