@@ -21,4 +21,10 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use("/", require("./routes/index"));
 
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+});
+
 module.exports = app;

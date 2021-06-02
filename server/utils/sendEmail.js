@@ -19,7 +19,15 @@ const sendEmail = async (options) => {
     text: options.message,
   };
 
-  await transport.sendMail(message);
+  //  transport.sendMail(message);
+
+  transport.sendMail(message, function (error, info) {
+    if (error) {
+      console.log("error is " + error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };
 
 module.exports = sendEmail;

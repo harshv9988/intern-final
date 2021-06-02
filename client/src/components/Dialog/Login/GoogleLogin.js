@@ -8,6 +8,7 @@ function LoginWithGoogle({ onClose }) {
   let { auth, setAuth } = useContext(authContext);
   let history = useHistory();
   const handleSignIn = async (info) => {
+    if (!info) return;
     console.log(info);
     let { data } = await axios.post("/user/googlesignup", {
       token: info.tokenId,

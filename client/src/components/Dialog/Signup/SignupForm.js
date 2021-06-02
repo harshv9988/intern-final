@@ -193,7 +193,7 @@ export default function SignupForm({ setShowLoginForm, onClose }) {
         );
       })
       .catch(function (error) {
-        console.log(error.response.data);
+        console.log(error.response.data.message);
         setLoading(false);
         if (error.response.data.type === "userName")
           setUsernameET(error.response.data.message);

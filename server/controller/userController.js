@@ -57,6 +57,11 @@ module.exports.googleSignup = async (req, res) => {
   try {
     let body = req.body;
     const token = body.token;
+    if (!token) {
+      return res.status(404).json({
+        success: false,
+      });
+    }
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: CLIENT_ID,
@@ -110,7 +115,10 @@ module.exports.signupEmail = async (req, res) => {
 
     const newUser = await User.create(req.body);
     const verificationToken = newUser._id;
-    const verificationUrl = `http://localhost:3000/verification/${verificationToken}`;
+    // const verificationUrl = `http://localhost:3000/verification/${verificationToken}`;
+    const verificationUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/verification/${verificationToken}`;
     const message = `Your email verification token is as follow:\n\n${verificationUrl}\n\nIf you have not requested this email, then ignore it.`;
 
     await sendEmail({
